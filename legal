@@ -1,0 +1,6 @@
+const id1 = prompt ("qual a sua idade")
+const id2 = prompt ("qual a idade do seu amigo")
+const a = Number(id1)
+const b = Number (id2)
+console.log(id1>id2)
+console.log(id1-id2)
