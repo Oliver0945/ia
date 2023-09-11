@@ -1,0 +1,8 @@
+const valor1 = prompt ("primeiro valor ") 
+const valor2 = prompt ("segundo valor") 
+const valor3 = prompt ("terceiro valor")
+const a = parseFloat (valor1)
+const b = parseFloat (valor2)
+const c = parseFloat (valor3)
+const soma = (a+b+c)
+console.log(soma)
