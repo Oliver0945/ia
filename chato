@@ -1,0 +1,6 @@
+const largura= prompt ("largura de um triangula")
+const a = parseFloat (largura)
+const altura = prompt ("altura de um triangulo")
+const b = parseFloat (altura)
+const soma = (a * b)
+console.log(soma)
