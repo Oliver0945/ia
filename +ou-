@@ -1,0 +1,6 @@
+const n1 = prompt ("um numero par")
+const n2 = prompt ("um numero")
+let  d =( n2 / n1)
+const a = Number (n1)
+const b = Number (n2)
+console.log(d)
