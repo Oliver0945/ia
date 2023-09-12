@@ -1,0 +1,8 @@
+let peso = parseFloat (prompt("qual o seu peso"))
+let altura = parseFloat (prompt("qual a sua altura"))
+let imc = peso / (altura*altura)
+console.log(imc)
+if(imc < 18.5){
+    console.log("abaixo do peso");
+} else if (imc > 18.6 && imc < 24.9){
+    console.log("peso ideal");
