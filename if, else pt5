@@ -1,0 +1,4 @@
+let a1234 = prompt ("insira sua senha")
+console.log (a1234)
+if (a1234 === "a1234" ){console.log("login bem-sucedido")}
+else if (a1234 !== "a1234") {console.log ("senha incorreta ")}
