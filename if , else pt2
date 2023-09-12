@@ -1,0 +1,11 @@
+let cor = prompt("cor")
+let simbolo = prompt("simbolo")
+console.log(cor)
+console.log(simbolo)
+if (cor === "vermelho" && simbolo === "x") { console.log("descanse") }
+ else if (cor === "azul" && simbolo === "$"){
+console.log("siga em frente")
+}else if (cor === "verde" && simbolo === "*")
+{console.log ("suba numa arvore")} 
+else if (cor === "amarelo" && simbolo === "#")
+{console.log ("pare e descanse")}
