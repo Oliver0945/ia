@@ -1,0 +1,6 @@
+let a = prompt( "insira um numero")
+let b = parseInt(a)
+console.log(a)
+if (a < 0 ) {console.log("igual a zero")}
+else if ( a < 0 ){console.log("numero negativo")}
+else if (a > 0  ){console.log("numero positivo")}
