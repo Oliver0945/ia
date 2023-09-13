@@ -1,0 +1,8 @@
+let a = Number (prompt("insira um numero"))
+let b = Number (prompt("insira um numero"))
+let c =  prompt("uma operaçao" )
+
+if (c === "+"){console.log(a + b);}
+ else if (c=== "-" ){console.log(a-b)}
+else if (c=== "*"){console.log (a*b)}
+else if (c=== "/" ) {console.log (a / b)}
