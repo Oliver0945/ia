@@ -1,5 +1,5 @@
-const nome = prmpt ("qual o seu nome ")
+const nome = pormpt ("qual o seu nome ")
 const cor = prompt ("qual a sua cor favorita")
-const frase =  ("meu nome é  e minha cor favorita e" )
+const frase = prompt ("meu nome é  e minha cor favorita e" )
 console.log(frase);
 alert( `meu nome é ${nome} e minha cor favorita e ${cor}`)
