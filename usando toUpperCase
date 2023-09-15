@@ -1,0 +1,3 @@
+const frase = prompt("uma frase")
+const fraseMaiuscula = frase.toUpperCase()
+alert(fraseMaiuscula)
