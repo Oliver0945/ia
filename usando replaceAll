@@ -1,0 +1,3 @@
+const a = prompt("OI")
+const b = a.replaceAll("o", "i")
+console.log (b)
