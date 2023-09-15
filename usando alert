@@ -1,0 +1,3 @@
+let a = prompt ("insira o seu nome ")
+let b = prompt ("insira o seu email")
+alert (`"o ${b} foi cadastrado com sucesso seja bem vindo ${a}"`)
