@@ -1,0 +1,10 @@
+let numeros= []
+let a = parseFloat (prompt ("numero 1"))
+let b = parseFloat (prompt ("numeoro 2"))
+let c = parseFloat (prompt ("numero 3"))
+numeros.push(a)
+numeros.push(b)
+numeros.push(c)
+console.log(numeros);
+const  calculo = (a+b+c / 3)  
+alert (`"a media da conta e ${calculo}"`)
