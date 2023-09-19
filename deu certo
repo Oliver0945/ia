@@ -1,0 +1,5 @@
+const str = "Para maiores informações, veja o Capítulo 3.4.5.1";
+const re = /(capítulo \d+(\.\d)*)/i;
+const found = str.match(re);
+
+console.log(found);
