@@ -1,0 +1,3 @@
+let a = prompt ("uma palavra ")
+a.match([/aeiou/])
+console.log(a);
