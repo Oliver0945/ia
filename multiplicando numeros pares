@@ -1,0 +1,4 @@
+let a = parseFloat (prompt("insira um numero"))
+let b = parseFloat (prompt ( "insira o segundo numero"))
+if (a % 2 === 0 && b % 2 === 0) {console.log("a multiplicaçao e " , a * b);}
+else if ("pelo menos um numero deve ser par "){}
