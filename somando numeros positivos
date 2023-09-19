@@ -1,0 +1,5 @@
+let a =  parseFloat ( prompt("um numero "))
+let b = parseFloat (prompt("segundo numero"))
+console.log(a+b);
+if (a >= 0 && b >= 0) {"numero positivo"}
+else if (c ==="+"){ a + b}
