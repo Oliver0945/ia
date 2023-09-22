@@ -1,8 +1,9 @@
-function calcularSoma (  numero1 , numero2 )  {
-    const soma = numero1 + numero2;
-    return soma;    
-   }
-   let n1 = Number (prompt ("insira o primeiro numero"))
-   let n2 = Number (prompt ("insira o segundo numero"))
-   const resultado = calcularSoma(n1 ,n2)
-   console.log(resultado);
+function numero (n1 , n2 ){
+console.log(n1);
+console.log(n2);
+return numero
+}
+let n1 = Number (prompt("insira um numero ") )
+let n2 = Number (prompt("insira o segundo numero"))
+if  (n1 > n2  ){ console.log(n1, "é maior")}
+else if  (n2 > n1  ){ console.log(n2, "é maior")}
