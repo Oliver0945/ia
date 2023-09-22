@@ -1,0 +1,12 @@
+function frase (nome , idade , cidade , profissao){
+    alert (` eu sou ${nome}, tenho  ${idade},moro em ${cidade}, eu sou ${profissao}`)
+    return frase
+}
+
+let nome = (prompt ("qual o seu nome "))
+let idade = Number (prompt ("qual sua idade") )
+let cidade = (prompt ("qul a sua cidade "))
+let profissao = (prompt ("qual a sua profissao"))
+
+let resultado = frase (nome , idade , cidade , profissao)
+console.log(resultado);
