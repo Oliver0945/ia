@@ -1,0 +1,4 @@
+const  a = Number (prompt("qual a data atual "))
+const b = Number (prompt("qual a sua data de nascimento"))
+const c = a - b
+console.log(c); 
