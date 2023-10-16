@@ -1,0 +1,47 @@
+export class Aluno{
+    nome: String;
+    notas: Array<number>;
+
+    constructor(nome: String){
+        this.nome = nome
+        this.notas = []
+    }
+
+    setNotas(n1: number, n2: number, n3: number){
+        this.notas.push(n1)
+        this.notas.push(n2)
+        this.notas.push(n3)
+    }
+
+    getMedia(): number{
+        let media = (this.notas[0] + this.notas[1] + this.notas[2]) / 3
+        return media
+    }
+}
+
+
+
+
+
+
+
+
+function main(): void{
+    let aluno = cadastro()
+    console.log(aluno.getMedia());
+}
+
+function cadastro(): Aluno{
+
+    let nome = leitor.question("Insira o nome do aluno")
+    let aluno = new Aluno(nome)
+    console.log("Aluno criado com sucesso!");
+
+    let n1 = leitor.questionFloat("Insira a nota 1: ")
+    let n2 = leitor.questionFloat("Insira a nota 2: ")
+    let n3 = leitor.questionFloat("Insira a nota 3: ")
+    aluno.setNotas(n1, n2, n3)
+    return aluno
+}
+
+main()
