@@ -1,0 +1,27 @@
+import*as leitor from "readline-sync"
+let menu : Boolean = true 
+while (menu){
+    let opcao : String = leitor.questionInt("informe uma cor ou digite 'sair' para fechar :").tolowercase()
+
+    switch(opcao){
+        case 'amarelo':
+        console.log('amarelo me lembra a primavera ');
+          break;
+        case 'sair':
+            console.log('saindo');
+          break;
+          default:
+            console.log('opcao inexistente');
+            break
+            
+          
+              
+
+        
+    }
+}
+
+
+
+
+
