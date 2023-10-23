@@ -1,0 +1,11 @@
+class Objeto {
+    constructor(public nome: string) {}
+}
+
+class ClassePrincipal {
+    constructor(public objetos: Objeto[]) {}
+
+    verificarObjetoPorNome(nomeProcurado: string): boolean {
+        return this.objetos.some(objeto => objeto.nome === nomeProcurado);
+    }
+}
