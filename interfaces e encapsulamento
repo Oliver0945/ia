@@ -1,0 +1,38 @@
+interface UmaPessoa {
+    nome: string 
+    idade : number
+    documentos : number
+    falar (): string
+    cantar (): string 
+    comprimentar (nomeOutro :string ): string 
+
+}
+
+
+export class fucionario implements UmaPessoa{
+    public nome:string
+    public idade: number
+    public documentos: number
+    private numaMatricula  : number
+    constructor(nome:string , idade : number , documentos : number){
+        this.documentos =documentos
+        this.idade = idade
+        this.nome = nome 
+
+    }
+
+    public falar(): string {
+        return `eu sou o ${this.nome}`
+
+
+    }
+    public cantar(): string {
+        return `lala eu estou cantando `
+    }
+    public comprimentar(nomeOutro: string): string {
+        return `ola ${nomeOutro} , tudo bem ?`
+        
+    }
+        
+    
+}
