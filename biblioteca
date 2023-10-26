@@ -1,0 +1,250 @@
+import * as leitor from "readline-sync"
+
+class Livro{
+    public id: number
+    public titulo: string
+    public autor: string
+    public anoPublicacao: number
+    public quantidadeDisponivel: number
+
+    constructor(id: number, titulo: string, autor: string, anoPublicacao: number, quantidadeDisponivel: number){
+        this.id = id
+        this.titulo = titulo
+        this.autor = autor
+        this.anoPublicacao = anoPublicacao
+        this.quantidadeDisponivel = quantidadeDisponivel
+    }
+}
+
+class Usuario{
+    public id: number
+    public nome: string
+    public email: string
+    public livrosEmprestados: Array<Livro>
+
+    constructor(id: number, nome: string, email: string){
+        this.id = id
+        this.nome = nome        
+        this.email = email
+        this.livrosEmprestados = []
+    }
+}
+
+interface Biblioteca{
+    cadastrarLivro(): void
+    cadastrarUsuario(): void
+    emprestarLivro(): void
+    devolverLivro(): void
+    consultarLivrosDisponiveis(): void
+}
+
+export class SistemaBiblioteca implements Biblioteca{
+
+    private usuarios: Array<Usuario>
+    private livros: Array<Livro>
+
+    public cadastrarLivro(): void {
+
+        let id =                    leitor.questionInt(`Informe o ID do livro: `)
+        let titulo =                leitor.question(`Informe o título: `)
+        let autor =                 leitor.question(`Informe o autor: `)
+        let anoPublicacao =         leitor.questionInt(`Informe o ano de publicação: `)
+        let quantidadeDisponivel =  leitor.questionInt(`Informe a quantidade em estoque: `)
+
+        let livro = new Livro(id, titulo, autor, anoPublicacao, quantidadeDisponivel)
+
+        this.livros.push(livro)
+
+        console.log(`Livro cadastrado com sucesso!!`);
+
+    }
+
+    public cadastrarUsuario(): void {
+
+        let id =    leitor.questionInt(`Informe o ID do usuário a ser cadastrado: `)
+        let nome =  leitor.question(`Informe o nome: `)         
+        let email = leitor.question(`Informe o email: `) 
+
+        let usuario = new Usuario(id, nome, email)
+
+        this.usuarios.push(usuario)
+
+        console.log(`Usuário cadastrado com sucesso!`);        
+
+    }
+
+    public emprestarLivro(): void {
+
+        this.usuarios.forEach(user => {
+            console.log(`Identificador: [${user.id}] - Nome: ${user.nome} \n`);
+        })
+        
+        let idUser = leitor.questionInt(`Informe o ID do usuário: `)
+        let findUser = this.usuarios.findIndex(u => u.id === idUser)
+
+        this.livros.forEach(book => {
+            console.log(`Identificador: [${book.id}] - Título: ${book.titulo} \n`);
+        })
+
+        let idBook = leitor.questionInt(`Informe do ID do Livro: `)
+        let findBook = this.livros.findIndex(l => l.id === idBook)
+
+        if (findBook && findUser) {
+
+            if (this.usuarios[findUser].livrosEmprestados.length < 3 && this.livros[findBook].quantidadeDisponivel > 0) {
+
+                this.usuarios[findUser].livrosEmprestados.push(this.livros[findBook])
+                this.livros[findBook].quantidadeDisponivel -= 1
+                
+                console.log(`Emprestimo do ${this.livros[findBook].titulo} para ${this.usuarios[findUser].nome} feito com sucesso!!`);                
+    
+            } else {
+                
+                console.log(`Não foi possível emprestar ${this.livros[findBook].titulo} para ${this.usuarios[findUser].nome}`);                
+            
+            }
+        } else if (!findBook || !findUser) {
+
+            console.log(`Usuário ou livro não encontrado`);
+            
+        } else {
+
+            console.log(`Ocorreu um erro, tente novamente.`);
+            
+        }
+    }
+
+    public devolverLivro(): void {
+
+        this.usuarios.forEach(user => {
+            console.log(`Identificador: [${user.id}] - Nome: ${user.nome} \n`);
+        })
+        
+        let idUser = leitor.questionInt(`Informe o ID do usuário: `)
+        let findUser = this.usuarios.findIndex(u => u.id === idUser)
+
+        if (findUser) {
+
+            console.log(`Livros emprestados para esse usuário: `);        
+
+            this.usuarios[findUser].livrosEmprestados.forEach(books =>{
+                console.log(`Identificador: [${books.id}] - Titulo: ${books.titulo} \n`);
+            })
+
+            let idBook = leitor.questionInt(`Informe o ID do livro para devolução: `)
+
+            let findBook = this.livros.findIndex(l => l.id === idBook)
+
+            if (findBook) {
+
+                this.usuarios[findUser].livrosEmprestados.splice(findBook, 1)
+                this.livros[findBook].quantidadeDisponivel += 1
+                console.log(`Livro devolvido com sucesso!!`);
+
+            } else if (!findBook) {
+
+                console.log(`Livro não encontrado`);
+
+            }
+
+        } else if (!findUser) {
+
+            console.log(`Usuário não encontrado`);
+            
+        } else {
+
+            console.log(`Ocorreu um erro, tente novamente!`);
+            
+        }
+    }
+
+    public consultarLivrosDisponiveis(): void {
+
+        this.livros.forEach(book => {
+            console.log(`Identificador: [${book.id}] - Título: ${book.titulo} \n`);
+        })
+
+    }
+
+    baseDadosLivros(){
+        let livroum     = new Livro(1, "Dom Quixote", "Miguel de Cervantes", 1605, 5)
+        let livrodois   = new Livro(2, "Em Busca do Tempo Perdido", "Marcel Proust", 1913, 7)
+        let livrotres   = new Livro(3, "Crime e Castigo", "Fiódor Dostoiévski", 1866, 3)
+        let livroquatro = new Livro(4, "Cem Anos de Solidão", "Gabriel García Márquez", 1967, 8)
+        let livrocinco  = new Livro(5, "Orgulho e Preconceito", "Jane Austen", 1813, 10)
+        let livroseis   = new Livro(6, "1984", "George Orwell", 1949, 2)
+        let livrosete   = new Livro(7, "O Grande Gatsby", "F. Scott Fitzgerald", 1925, 6)
+        let livrooito   = new Livro(8, "Ulisses", "James Joyce", 1922, 4)
+        let livronove   = new Livro(9, "Apanhador no Campo de Centeio", "J.D. Salinger", 1951, 9)
+        let livrodez    = new Livro(10, "A Metamorfose", "Franz Kafka", 1915, 1)
+        this.livros.push(livroum, livrodois, livrotres, livroquatro, livrocinco, livroseis, livrosete, livrooito, livronove, livrodez)
+    }
+
+    baseDadosUsuarios(){
+            let userum     = new Usuario(1, "João Silva", "joao@gmail.com")
+            let userdois   = new Usuario(2, "Maria Santos", "maria@gmail.com")
+            let usertres   = new Usuario(3, "José Pereira", "jose@gmail.com")
+            let userquatro = new Usuario(4, "Ana Júlia", "ana@gmail.com")
+            let usercinco  = new Usuario(5, "Paulo Lima", "paulo@gmail.com")
+            let userseis   = new Usuario(6, "Camila Ferreira", "camila@hotmail.com")
+            let usersete   = new Usuario(7, "Fernando Alves", "fernando@hotmail.com")
+            let useroito   = new Usuario(8, "Sofia Oliveira", "sofia@hotmail.com")
+            let usernove   = new Usuario(9, "Lucas Rodrigues", "lucas@hotmail.com")
+            let userdez    = new Usuario(10, "Mariana Pereira", "mariana@hotmail.com")
+            this.usuarios.push(userum, userdois, usertres, userquatro, usercinco, userseis, usersete, useroito, usernove, userdez)
+    }
+
+    
+}
+
+
+
+
+
+
+
+
+
+import { SistemaBiblioteca } from "./teste";
+import * as leitor from "readline-sync"
+
+let biblioteca = new SistemaBiblioteca()
+biblioteca.baseDadosLivros()
+biblioteca.baseDadosUsuarios()
+
+while(true){
+    console.log(`Seja bem-vindo ao sistema de biblioteca!`);
+    console.log(`1 - Cadastrar Livro`);
+    console.log(`2 - Cadastrar Usuário`);
+    console.log(`3 - Emprestar Livro`);
+    console.log(`4 - Devolver Livro`);
+    console.log(`5 - Livros Disponíveis`);
+    console.log(`6 - Sair`);
+    
+    let opcao = leitor.questionInt(`Informe a opção desejada: `)
+
+    switch (opcao) {
+        case 1:
+            biblioteca.cadastrarLivro()
+            break;
+        case 2:
+            biblioteca.cadastrarUsuario()
+            break;
+        case 3:
+            biblioteca.emprestarLivro()
+            break;
+        case 4:
+            biblioteca.devolverLivro()
+            break;
+        case 5:
+            biblioteca.consultarLivrosDisponiveis()
+            break;
+        case 6:
+            console.log(`Saindo, volte sempre.`);
+            process.exit(0);
+        default:
+            console.log(`Opção inválida!\n`);
+            break;
+    }
+    
+}
