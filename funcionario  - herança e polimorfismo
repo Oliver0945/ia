@@ -1,0 +1,55 @@
+export class Funcionario{
+    protected nome: string;
+    protected idade: number;
+    protected salario: number;
+
+    constructor(nome: string, idade: number, salario: number){
+        this.idade = idade
+        this.nome = nome
+        this.salario = salario
+    }
+
+    exibirDetalhes(): void{
+        console.log(`Nome: ${this.nome}`);
+        console.log(`Idade: ${this.idade}`);
+        console.log(`Salario: ${this.salario}`);
+    }
+}
+
+export class Vendedor extends Funcionario{
+    private comissao: number;
+
+    constructor(nome: string, idade: number, salario: number, comissao: number){
+        super(nome, idade, salario)
+        this.comissao = comissao
+    }
+
+    calcularSalario(){
+        this.salario += this.comissao
+    }
+
+    exibirDetalhes(): void{
+        super.exibirDetalhes()
+        console.log(`Comissão: ${this.comissao}`);
+    }
+
+}
+
+
+
+import { Funcionario, Vendedor } from "./Classes";
+
+const funcionarioum = new Funcionario("João", 30, 3000);
+const vendedorum = new Vendedor("Mario", 25, 3000, 500);
+
+console.log(`Detalhes do funcionário padrão: `);
+funcionarioum.exibirDetalhes()
+
+console.log(`Detalhes do vendedor: `);
+vendedorum.calcularSalario()
+vendedorum.calcularSalario()
+vendedorum.calcularSalario()
+vendedorum.calcularSalario()
+vendedorum.calcularSalario()
+vendedorum.exibirDetalhes()
+
