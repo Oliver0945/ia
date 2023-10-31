@@ -1,0 +1,13 @@
+CREATE TABLE usario(
+id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+nome VARCHAR (50) NOT NULL ,
+idade INT NOT NULL ,
+endereco VARCHAR (50)
+);
+
+INSERT INTO usuario (nome , idade , endereco )
+VALUES 
+('joao', 20, 'rua dos testes' ),
+('mario' , 45, ' rua dos encanadores' ),
+('ana julia', 18 'rua do sertao '),
+('luigi' , 45 , 'rua dos encanadores' ); 
