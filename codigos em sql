@@ -1,0 +1,20 @@
+CREATE TABLE medicamentos (
+id_medicamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+nome VARCHAR (50) NOT NULL,
+preco INT NOT NULL,
+estoque INT  NOT NULL
+)
+
+
+
+INSERT INTO medicamentos (nome, preco , estoque )
+VALUES 
+('dramin', 15 , 6),
+('rivrotil' ,60 , 5),
+('dorflerx', 20 ,5 );
+
+
+
+SELECT * FROM medicamentos
+SELECT nome FROM medicamentos
+SELECT nome, preco FROM medicamentos
