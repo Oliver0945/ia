@@ -1,0 +1,33 @@
+
+CREATE TABLE SistemaFarmacia(
+	id_farmacia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_medicamento INT NOT NULL,
+	id_usuario INT NOT NULL,
+	FOREIGN KEY (id_medicamento) REFERENCES medicamentos(id_medicamento),
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+
+
+
+
+INSERT INTO sistemafarmacia(id_medicamento,id_usuario)
+VALUES
+(1,1),
+(2,2),
+(3,3);
+
+
+
+
+///
+
+
+SELECT usuario.nome, medicamentos.nome
+FROM sistemafarmacia
+INNER JOIN usuario ON usuario.id_usuario = sistemafarmacia.id_usuario
+INNER JOIN medicamentos ON medicamentos.id_medicamento = sistemafarmacia.id_medicamento;
+
+SELECT id_usuario, id_medicamento FROM sistemafarmacia;
+
+
