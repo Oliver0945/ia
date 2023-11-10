@@ -1,0 +1,224 @@
+import * as leitor from "readline-sync"
+import banco from "./db"
+
+export class Farmacia{
+    //getters
+
+    async getMedicamentos(): Promise<string>{
+        try {
+            let getRemedios = await executarBanco(`SELECT * FROM medicamentos`, [])
+            console.log(`\nLista de remédios: `);
+            return getRemedios.forEach(({id_medicamento, nome_medicamento, quantidadeEmEstoque, precoPorUnidade}: any) => {
+                console.log(`ID: ${id_medicamento}`);
+                console.log(`Nome: ${nome_medicamento}`);
+                console.log(`Qtd. em Estoque: ${quantidadeEmEstoque}`);
+                console.log(`Preco: ${precoPorUnidade}\n`);
+            });
+        } catch (error) {
+            return `Erro: ${error}`
+        }
+    }
+    async getClientes(): Promise<string>{
+        try {
+            let getClientes = await executarBanco(`SELECT * FROM clientes`, [])
+            console.log(`\nLista de clientes: `);
+            return getClientes.forEach(({id_cliente, nome_cliente, documento}: any) => {
+                console.log(`ID: ${id_cliente}`);
+                console.log(`Nome: ${nome_cliente}`);
+                console.log(`Documento (RG ou CPF): ${documento}`);
+            });
+        } catch (error) {
+            return `Erro: ${error}`
+        }
+    }
+    async getVendas(): Promise<string>{
+        try {
+            let getVendas = await executarBanco(`
+            SELECT vendas.id_venda, clientes.nome_cliente, medicamentos.nome_medicamento
+            FROM vendas
+            INNER JOIN clientes ON clientes.id_cliente = vendas.id_cliente
+            INNER JOIN medicamentos ON medicamentos.id_medicamento = vendas.id_medicamento
+            `, [])
+            console.log(`\nLista de clientes: `);
+            return getVendas.forEach(({id_venda, nome_cliente, nome_medicamento}: any) => {
+                console.log(`ID da Venda: ${id_venda}`);
+                console.log(`Nome do Cliente: ${nome_cliente}`);
+                console.log(`Nome do Medicamento: ${nome_medicamento}`);
+            });
+        } catch (error) {
+            return `Erro: ${error}`
+        }
+    }
+    async getEstoque(): Promise<string>{
+        try {
+            let getEstoque = await executarBanco(`SELECT nome_medicamento, quantidadeEmEstoque FROM medicamentos`, [])
+            console.log(`\nEstoque: `);
+            return getEstoque.forEach(({nome_medicamento, quantidadeEmEstoque}: any) => {
+                console.log(`Medicamento: ${nome_medicamento}`);
+                console.log(`Qt.: ${quantidadeEmEstoque}`);
+            });
+        } catch (error) {
+            return `Erro: ${error}`
+        }
+    }
+
+    //setters
+
+    async setMedicamentos(): Promise<void>{
+        let nome_medicamento = leitor.question("Informe o nome do medicamento: ").toUpperCase()
+        let quantidadeEmEstoque = leitor.questionInt("Informe a quantidade de medicamento que será inserida: ")
+        let precoPorUnidade = leitor.questionFloat("Informe o preço da unidade do medicamento: ")
+        try {
+            await executarBanco(`
+            INSERT INTO medicamentos(nome_medicamento, quantidadeEmEstoque, precoPorUnidade) 
+            VALUES (?, ?, ?)`, 
+            [nome_medicamento, quantidadeEmEstoque, precoPorUnidade])
+        } catch (error) {
+            console.error(`Erro: ${error}`);
+        }
+    }
+
+    async setClientes(): Promise<void>{
+        let nome_cliente = leitor.question("Informe o nome do cliente: ").toUpperCase()
+        let documento = leitor.question("Informe o documento do cliente (RG ou CPF): ")
+        try {
+            await executarBanco(`
+            INSERT INTO clientes(nome_cliente, documento)
+            VALUES (?, ?)`, 
+            [nome_cliente, documento])
+        } catch (error) {
+            console.error(`Erro: ${error}`);
+        }
+    }
+
+    async setVendas(): Promise<void>{
+        await this.getMedicamentos()
+        let id_medicamento = leitor.questionInt("Informe o id do medicamento selecionado: ")
+        await this.getClientes()
+        let id_cliente = leitor.questionInt("Informe o id do cliente selecionado: ")
+        try {
+            await executarBanco(`INSERT INTO vendas(id_medicamento, id_cliente) VALUES (?, ?)`, [id_medicamento, id_cliente])
+        } catch (error) {
+            console.error(`Erro: ${error}`);
+        }        
+    }
+
+    //deletions
+
+    async deleteMedicamento(): Promise<void>{
+        await this.getMedicamentos()
+        let id_medicamento = leitor.questionInt(`Insira o ID do medicamento a ser deletado: `)
+        try {
+            await executarBanco(`DELETE FROM medicamentos WHERE id_medicamento = ?`, [id_medicamento])
+            console.log(`Medicamento deletado.`);
+        } catch (error) {
+            console.error(`Erro: ${error}`);
+        }
+    }
+
+    async deleteCliente(): Promise<void>{
+        await this.getClientes()
+        let id_cliente = leitor.questionInt(`Insira o ID do cliente a ser deletado: `)
+        try {
+            await executarBanco(`DELETE FROM clientes WHERE id_cliente = ?`, [id_cliente])
+            console.log(`Cliente deletado.`);
+        } catch (error) {
+            console.error(`Erro: ${error}`);
+        }
+    }
+
+    // função de substituição de medicamentos
+    async substituicao(): Promise<void>{
+        await this.deleteMedicamento()
+        await this.setMedicamentos()
+    }
+
+}
+
+async function executarBanco(query: string, params: any[]) {
+    try {
+        const result = await banco.execute(query, params)
+        return result
+    } catch (error) {
+        console.error('Erro na execucao da consulta', error)
+        throw error
+    }
+}
+
+
+
+--------------------------------------------------------
+
+
+
+import { Farmacia } from "./farmacia";
+import * as leitor from "readline-sync"
+
+const farmacia = new Farmacia()
+
+async function main() {
+  while(true){
+    console.log(`\nMenu`);
+    console.log(`1 - Listar Medicamentos`);
+    console.log(`2 - Listar Clientes`);
+    console.log(`3 - Listar Vendas`);
+    console.log(`4 - Listar Estoque`);
+    console.log(`5 - Cadastrar Medicamento`);
+    console.log(`6 - Cadastrar Cliente`);
+    console.log(`7 - Realizar Venda`);
+    console.log(`8 Substituir Medicamento`);
+    console.log(`9 - Deletar Cliente`);
+    console.log(`10 - Deletar Medicamento`);
+    console.log(`0 - Sair`);
+    
+    let escolha = leitor.questionInt("Escolha uma opcao: ")
+
+    switch(escolha){
+        case 1:
+            await farmacia.getMedicamentos()
+            break;
+        case 2:
+            await farmacia.getClientes()
+            break;
+        case 3:
+            await farmacia.getVendas()
+            break;
+        case 4:
+            await farmacia.getEstoque()
+            break;
+        case 5:
+            await farmacia.setMedicamentos()
+            break;
+        case 6:
+            await farmacia.setClientes()
+            break;
+        case 7:
+            await farmacia.setVendas()
+            break;
+        case 8:
+            await farmacia.substituicao()
+            break;
+        case 9:
+            await farmacia.deleteCliente()
+            break;
+        case 10:
+            await farmacia.deleteMedicamento()
+            break;
+        case 0:
+            console.log(`Saindo! Até logo.`);
+            process.exit(0)
+        default:
+            console.log(`Opcao invalida`);
+    }
+  }
+}
+
+main()
+
+
+
+
+
+
+
+
